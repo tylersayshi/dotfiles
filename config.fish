@@ -29,6 +29,7 @@ end
 thefuck --alias | source
 
 alias python="python3"
+alias hg="history | grep"
 
 alias gst="git status"
 alias g="git"
