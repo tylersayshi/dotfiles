@@ -19,8 +19,19 @@ function ....
 end
 
 thefuck --alias | source
+
 alias python="python3"
+
 alias gst="git status"
+alias gc="git commit"
+alias gco="git checkout"
+alias gl="git pull"
+alias gp="git push"
+alias gd="git diff"
+alias gb="git branch"
+alias gba="git branch -a"
+alias del="git branch -d"
+
 alias tree="tree -C"
 
 set -g theme_color_scheme dark
