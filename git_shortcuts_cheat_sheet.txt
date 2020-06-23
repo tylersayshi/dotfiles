@@ -1,0 +1,16 @@
+# terminal aliases
+g:    git
+gst:  git status
+
+# git aliases
+st:   status
+c:    git commit
+co:   git checkout
+l:    git pull
+p:    git push
+d:    git diff
+b:    branch
+bd:   branch -d
+ba:   branch -a
+caa:  commit -a --amend -C HEAD
+ls:   log --oneline
