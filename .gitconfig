@@ -1,15 +1,19 @@
 [user]
-	name = Tyler Lawson
-	email = tylerjlawson2@gmail.com
+    name = Tyler Lawson
+    email = tylerjlawson2@gmail.com
 [alias]
-	ci = commit
-	co = checkout
-	b = branch
-	lol = log --graph --decorate --pretty=oneline --abbrev-commit
-	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-	ls = log --oneline
-	caa = commit -a --ammend -C HEAD
-	logg = log --pretty=oneline --abbrev-commit
-	lpt = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    st = status
+    c = commit
+    co = checkout
+    b = branch
+    ba = branch -a
+    bd = branch -d
+    l = pull
+    p = push
+    d = diff
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    ls = log --oneline
+    caa = commit -a --amend -C HEAD
 [core]
-	editor = vim
+    editor = vim
