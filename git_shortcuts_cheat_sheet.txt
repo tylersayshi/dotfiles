@@ -4,6 +4,7 @@ gst:  git status
 
 # git aliases
 st:   status
+a:    add
 c:    git commit
 co:   git checkout
 l:    git pull

@@ -2,6 +2,7 @@
     name = Tyler Lawson
     email = tylerjlawson2@gmail.com
 [alias]
+    a = add
     st = status
     c = commit
     co = checkout
