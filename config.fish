@@ -18,19 +18,20 @@ function ....
      cd ../../..
 end
 
+function cheat
+    if count $argv > /dev/null
+        cat ~/help/git_shortcuts_cheat_sheet.txt | grep $argv
+    else
+        cat ~/help/git_shortcuts_cheat_sheet.txt
+    end
+end
+
 thefuck --alias | source
 
 alias python="python3"
 
 alias gst="git status"
-alias gc="git commit"
-alias gco="git checkout"
-alias gl="git pull"
-alias gp="git push"
-alias gd="git diff"
-alias gb="git branch"
-alias gba="git branch -a"
-alias del="git branch -d"
+alias g="git"
 
 alias tree="tree -C"
 
