@@ -1,5 +1,4 @@
 # terminal aliases
-g:    git
 gst:  git status
 
 # git aliases
