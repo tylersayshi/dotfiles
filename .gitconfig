@@ -5,7 +5,10 @@
     a = add
     st = status
     c = commit
+    cm = commit -m
+    cmn = commit -m --no-verify
     co = checkout
+    f = fetch
     b = branch
     ba = branch -a
     bd = branch -d

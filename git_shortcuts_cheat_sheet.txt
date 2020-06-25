@@ -5,11 +5,14 @@ gst:  git status
 # git aliases
 st:   status
 a:    add
-c:    git commit
-co:   git checkout
-l:    git pull
-p:    git push
-d:    git diff
+c:    commit
+cm:   commit -m
+cmn:  commit -m --no-verify
+co:   checkout
+f:    fetch
+l:    pull
+p:    push
+d:    diff
 b:    branch
 bd:   branch -d
 ba:   branch -a
