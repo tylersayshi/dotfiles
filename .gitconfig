@@ -8,6 +8,8 @@
     cm = commit -m
     cmn = "!f(){ git commit -m \"$1\" --no-verify;}; f"
     co = checkout
+    rb = rebase
+    rbom = rebase origin/master
     f = fetch
     b = branch
     ba = branch -a

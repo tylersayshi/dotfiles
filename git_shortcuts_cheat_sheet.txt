@@ -9,6 +9,8 @@ cm:   commit -m
 cmn:  commit -m --no-verify
 co:   checkout
 f:    fetch
+rb:   rebase
+rbom: rebase origin/master
 l:    pull
 p:    push
 d:    diff
