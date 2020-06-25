@@ -26,6 +26,14 @@ function cheat
     end
 end
 
+function wttr
+    if count $argv > /dev/null
+        curl wttr.in/$argv
+    else
+        curl wttr.in
+    end
+end
+
 thefuck --alias | source
 
 alias python="python3"
