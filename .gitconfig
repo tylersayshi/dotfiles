@@ -6,7 +6,7 @@
     st = status
     c = commit
     cm = commit -m
-    cmn = commit -m --no-verify
+    cmn = "!f(){ git commit -m ${2} --no-verify; }; f"
     co = checkout
     f = fetch
     b = branch
