@@ -23,3 +23,5 @@
     caa = commit -a --amend -C HEAD
 [core]
     editor = vim
+[pull]
+	rebase = false
