@@ -7,6 +7,8 @@
     c = commit
     cm = commit -m
     cmn = "!f(){ git commit -m \"$1\" --no-verify;}; f"
+    caa = commit -a --amend -C HEAD
+    caan = commit -a --amend -C HEAD --no-verify
     co = checkout
     rb = rebase
     rbom = rebase origin/master
@@ -20,7 +22,6 @@
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = log --oneline
-    caa = commit -a --amend -C HEAD
 [core]
     editor = vim
 [pull]
