@@ -6,7 +6,7 @@ function sudo
     end
 end
 
-function pdfman
+function pdfman -d "manpage as pdf"
     man -t $1 | pstopdf -i -o /tmp/$1.pdf && open /tmp/$1.pdf
 end
 
@@ -18,7 +18,7 @@ function ....
      cd ../../..
 end
 
-function cheat
+function cheat -d "cheat sheet for git shortcuts"
     if count $argv > /dev/null
         cat ~/help/git_shortcuts_cheat_sheet.txt | grep $argv
     else
@@ -26,11 +26,24 @@ function cheat
     end
 end
 
-function wttr
+function wttr -d "Get the weather"
     if count $argv > /dev/null
         curl wttr.in/$argv
     else
         curl wttr.in
+    end
+end
+
+function mkcd -d "Create a directory and set CWD"
+    command mkdir $argv
+    if test $status = 0
+        switch $argv[(count $argv)]
+            case '-*'
+
+            case '*'
+                cd $argv[(count $argv)]
+                return
+        end
     end
 end
 

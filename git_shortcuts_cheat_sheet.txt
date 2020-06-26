@@ -2,20 +2,20 @@
 gst:  git status
 
 # git aliases
-st:   status
 a:    add
+st:   status
+p:    push
+l:    pull
 c:    commit
 cm:   commit -m
 cmn:  commit -m --no-verify
+caa:  commit -a --amend -C HEAD
 co:   checkout
-f:    fetch
 rb:   rebase
 rbom: rebase origin/master
-l:    pull
-p:    push
+f:    fetch
 d:    diff
 b:    branch
 bd:   branch -d
 ba:   branch -a
-caa:  commit -a --amend -C HEAD
 ls:   log --oneline
