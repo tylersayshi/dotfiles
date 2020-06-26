@@ -7,7 +7,7 @@ function sudo
 end
 
 function pdfman -d "manpage as pdf"
-    man -t $1 | pstopdf -i -o /tmp/$1.pdf && open /tmp/$1.pdf
+    man -t $argv | ps2pdf - /tmp/$argv.pdf && open /tmp/$argv.pdf
 end
 
 function ...
