@@ -16,6 +16,7 @@
     b = branch
     ba = branch -a
     bd = branch -d
+    bclean = "!f(){ git branch | grep -v 'master' | xargs git branch -D; }; f"
     l = pull
     p = push
     d = diff
