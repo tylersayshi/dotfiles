@@ -11,7 +11,10 @@
     caan = commit -a --amend -C HEAD --no-verify
     co = checkout
     rb = rebase
+    rbc = rebase --continue
     rbom = rebase origin/master
+    rsom = reset --soft origin/master
+    rs = reset --soft
     f = fetch
     b = branch
     ba = branch -a
@@ -19,10 +22,13 @@
     bclean = "!f(){ git branch | grep -v 'master' | xargs git branch -D; }; f"
     l = pull
     p = push
+    pub = "!git push -u origin $(git branch-name)"
+    unpub = "!git push origin :$(git branch-name)"
     d = diff
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = log --oneline
+	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
 [core]
     editor = vim
 [pull]

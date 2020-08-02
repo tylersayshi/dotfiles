@@ -22,14 +22,6 @@ function rnm
     mmv "$argv[1]*" "$argv[2]#1"
 end
 
-function cheat -d "cheat sheet for git shortcuts"
-    if count $argv > /dev/null
-        cat ~/help/git_shortcuts_cheat_sheet.txt | grep $argv
-    else
-        cat ~/help/git_shortcuts_cheat_sheet.txt
-    end
-end
-
 function wttr -d "Get the weather"
     if count $argv > /dev/null
         curl wttr.in/$argv
