@@ -22,8 +22,8 @@
     bclean = "!f(){ git branch | grep -v 'master' | xargs git branch -D; }; f"
     l = pull
     p = push
-    pub = "!git push -u origin $(git branch-name)"
-    unpub = "!git push origin :$(git branch-name)"
+    pub = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
+    unpub = "!git push origin :$(git rev-parse --abbrev-ref HEAD)"
     d = diff
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
