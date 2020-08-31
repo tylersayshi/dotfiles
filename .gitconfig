@@ -7,10 +7,12 @@
     c = commit
     cm = commit -m
     cmn = "!f(){ git commit -m \"$1\" --no-verify;}; f"
+    ca = commit --amend
     caa = commit -a --amend -C HEAD
     caan = commit -a --amend -C HEAD --no-verify
     co = checkout
     rb = rebase
+    rbi = "!f(){ git rebase -i HEAD~$1; }; f"
     rbc = rebase --continue
     rbom = rebase origin/master
     rsom = reset --soft origin/master
