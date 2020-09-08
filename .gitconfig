@@ -23,6 +23,7 @@
     bd = branch -d
     bclean = "!f(){ git branch | grep -v 'master' | xargs git branch -D; }; f"
     l = pull
+    lr = pull --rebase
     p = push
     pub = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
     unpub = "!git push origin :$(git rev-parse --abbrev-ref HEAD)"
