@@ -31,7 +31,7 @@
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = log --oneline
-	deploy = "!f(){ subtree push --prefix $1 origin gh-pages; }; f"
+	deploy = "!f(){ git subtree push --prefix $1 origin gh-pages; }; f"
 [core]
     editor = vim
 [pull]
