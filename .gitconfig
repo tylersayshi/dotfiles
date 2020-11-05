@@ -18,10 +18,11 @@
     rsom = reset --soft origin/master
     rs = reset --soft
     f = fetch
+    prune = fetch --prune --all
     b = branch
     ba = branch -a
     bd = branch -d
-    bclean = "!f(){ git branch | grep -v 'master' | xargs git branch -D; }; f"
+    bclean = "!f(){ git branch | grep -v 'master' | xargs git branch -D & git fetch --prune --all; }; f"
     l = pull
     lr = pull --rebase
     p = push
