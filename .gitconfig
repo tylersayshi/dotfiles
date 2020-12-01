@@ -26,6 +26,7 @@
     l = pull
     lr = pull --rebase
     p = push
+    pf = push -f
     pub = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
     unpub = "!git push origin :$(git rev-parse --abbrev-ref HEAD)"
     d = diff
