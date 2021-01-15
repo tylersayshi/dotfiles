@@ -8,6 +8,7 @@
     cm = commit -m
     cmn = "!f(){ git commit -m \"$1\" --no-verify;}; f"
     ca = commit --amend
+    cs = commit --no-verify -am "save"
     caa = commit -a --amend -C HEAD
     caan = commit -a --amend -C HEAD --no-verify
     co = checkout
