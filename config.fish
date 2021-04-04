@@ -51,6 +51,7 @@ alias dot="cd ~/gitspace/dotfiles"
 alias cat="ccat"
 
 alias gst="git status"
+alias gsp="cd ~/gitspace"
 
 alias tree="tree -C"
 
@@ -67,4 +68,3 @@ if test -e ~/.config/fish/local.fish
 end
 
 set PATH $PATH $HOME/bin
-

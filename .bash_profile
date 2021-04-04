@@ -16,4 +16,3 @@ alias gst='git status'
 alias la='ls -a'
 
 cd ~
-
