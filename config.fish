@@ -66,3 +66,5 @@ if test -e ~/.config/fish/local.fish
     source ~/.config/fish/local.fish
 end
 
+set PATH $PATH $HOME/bin
+
