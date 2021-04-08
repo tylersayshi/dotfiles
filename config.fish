@@ -43,6 +43,14 @@ function mkcd -d "Create a directory and set CWD"
     end
 end
 
+function aptup
+    sudo apt update
+    sudo apt -y upgrade
+    sudo apt clean
+    sudo apt -y autoremove
+end
+
+
 thefuck --alias | source
 
 alias python="python3"
