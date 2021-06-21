@@ -1,3 +1,7 @@
+if test -e ~/.config/fish/local.fish
+    source ~/.config/fish/local.fish
+end
+
 function sudo
     if test "$argv" = !!
         eval command sudo $history[1]
@@ -70,9 +74,5 @@ set -g fish_prompt_pwd_dir_length 0
 set -g theme_display_date no
 set -g theme_date_format "+%a %H:%M"
 set -g theme_nerd_fonts yes
-
-if test -e ~/.config/fish/local.fish
-    source ~/.config/fish/local.fish
-end
 
 set PATH $PATH $HOME/bin
