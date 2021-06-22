@@ -25,7 +25,7 @@
     b = branch
     ba = branch -a
     bd = branch -d
-    bclean = "!f(){ git branch | grep -v '$(git main)' | xargs git branch -D & git fetch --prune --all; }; f"
+    bclean = "!f(){ git branch | grep -v $(git main) | xargs git branch -D & git fetch --prune --all; }; f"
     l = pull
     lr = pull --rebase
     p = push
