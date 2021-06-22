@@ -12,25 +12,26 @@
     caa = commit -a --amend -C HEAD
     caan = commit -a --amend -C HEAD --no-verify
     co = checkout
+    com = !git checkout $MAIN_BRANCH
     rb = rebase
     rbi = "!f(){ git rebase -i HEAD~$1; }; f"
     rbc = rebase --continue
-    rbom = rebase origin/master
-    rsom = reset --soft origin/master
+    rbom = !git rebase origin/$MAIN_BRANCH
+    rsom = !git reset --soft origin/$MAIN_BRANCH
     rs = reset --soft
     f = fetch
     prune = fetch --prune --all
     b = branch
     ba = branch -a
     bd = branch -d
-    bclean = "!f(){ git branch | grep -v 'master' | xargs git branch -D & git fetch --prune --all; }; f"
+    bclean = "!f(){ git branch | grep -v '$MAIN_BRANCH' | xargs git branch -D & git fetch --prune --all; }; f"
     l = pull
     lr = pull --rebase
     p = push
     pf = push -f
     pub = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
+    pubc = "!git push -u origin $(git rev-parse --abbrev-ref HEAD) -o create.mr" # publish branch and auto create merge request (Gitlab)
     unpub = "!git push origin :$(git rev-parse --abbrev-ref HEAD)"
-    d = diff
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = log --oneline

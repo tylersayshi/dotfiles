@@ -76,3 +76,7 @@ set -g theme_date_format "+%a %H:%M"
 set -g theme_nerd_fonts yes
 
 set PATH $PATH $HOME/bin
+
+if not set -q MAIN_BRANCH
+    set -x MAIN_BRANCH master
+end
