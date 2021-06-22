@@ -47,6 +47,7 @@ function mkcd -d "Create a directory and set CWD"
     end
 end
 
+# specific to ubuntu
 function aptup
     sudo apt update
     sudo apt -y upgrade
@@ -54,6 +55,13 @@ function aptup
     sudo apt -y autoremove
 end
 
+# specific to mac
+function brewup
+    brew update
+    brew upgrade
+    brew cleanup
+    brew doctor
+end
 
 thefuck --alias | source
 
@@ -76,7 +84,3 @@ set -g theme_date_format "+%a %H:%M"
 set -g theme_nerd_fonts yes
 
 set PATH $PATH $HOME/bin
-
-if not set -q MAIN_BRANCH
-    set -x MAIN_BRANCH master
-end
