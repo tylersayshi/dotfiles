@@ -83,4 +83,4 @@ set -g theme_display_date no
 set -g theme_date_format "+%a %H:%M"
 set -g theme_nerd_fonts yes
 
-set PATH $PATH $HOME/bin
+fish_add_path $HOME/bin
