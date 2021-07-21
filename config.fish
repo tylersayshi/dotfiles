@@ -84,3 +84,10 @@ set -g theme_date_format "+%a %H:%M"
 set -g theme_nerd_fonts yes
 
 fish_add_path $HOME/bin
+
+set NVM_DIR $HOME/.nvm
+function nvm
+    bass source ~/.nvm/nvm.sh --no-use ';' nvm $argv
+end
+nvm use default --silent
+
