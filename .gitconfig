@@ -22,6 +22,7 @@
     rs = reset --soft
     f = fetch
     prune = fetch --prune --all
+    tp = !git tag -l | xargs git tag -d && git fetch -t
     b = branch
     ba = branch -a
     bd = branch -d
