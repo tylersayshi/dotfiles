@@ -47,21 +47,47 @@ function mkcd -d "Create a directory and set CWD"
     end
 end
 
-# specific to ubuntu
+# SPECIFIC TO UBUNTU
 function aptup
     sudo apt update
     sudo apt -y upgrade
     sudo apt clean
     sudo apt -y autoremove
 end
+# END UBUNTU SPECIFIC
 
-# specific to mac
+function isnumber
+    string match -qr '^[0-9]+$' $argv
+end
+
+
+# SPECIFIC TO MAC
 function brewup
     brew update
     brew upgrade
     brew cleanup
     brew doctor
 end
+
+function port
+    set -l testPort (lsof -t -i tcp:$argv)
+    if test -n "$testPort"
+        echo $testPort
+    else
+        echo "No process running on port: $argv"
+    end
+end
+
+function killport
+    set -l portRunning (port $argv)
+    if isnumber $portRunning
+        kill -9 $portRunning
+        echo "PID $portRunning killed - port $argv is now free"
+    else
+        echo $portRunning
+    end
+end
+# END MAC SPECIFIC
 
 thefuck --alias | source
 
