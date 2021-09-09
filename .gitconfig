@@ -17,7 +17,6 @@
     rb = rebase
     rbi = "!f(){ git rebase -i HEAD~$1; }; f"
     rbc = rebase --continue
-    rbonto = "!f(){ git rebase --onto $1 $(git this)~ $(git this); }; f"
     rbom = !git rebase origin/$(git main)
     rsom = !git reset --soft origin/$(git main)
     rs = reset --soft
