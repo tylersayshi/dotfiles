@@ -26,14 +26,6 @@ function rnm
     mmv "$argv[1]*" "$argv[2]#1"
 end
 
-function wttr -d "Get the weather"
-    if count $argv > /dev/null
-        curl wttr.in/$argv
-    else
-        curl wttr.in
-    end
-end
-
 function mkcd -d "Create a directory and set CWD"
     command mkdir $argv
     if test $status = 0
