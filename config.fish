@@ -86,7 +86,6 @@ thefuck --alias | source
 alias python="python3"
 alias hg="history | grep"
 alias dot="cd ~/gitspace/dotfiles"
-alias cat="ccat"
 
 alias gst="git status"
 alias gsp="cd ~/gitspace"
