@@ -42,6 +42,7 @@
 	deploy = "!f(){ git subtree push --prefix $1 origin gh-pages; }; f"
     main = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' # detect main branch of current repo
     this = rev-parse --abbrev-ref HEAD # current branch that you are on
+    mru = "!git log -g -n 1000 --format=\"%gd %gs\" --date=relative HEAD@{now} | grep checkout | grep \" to\" | sed 's/HEAD@{\\(.*\\)}.* to\\(.*\\)/(\\1)\\t\\2/' | awk -v OFS=' ' '!x[$NF]++' | head -n 15 | column -ts $'\\t'" 
 [core]
     editor = vim
 [pull]
