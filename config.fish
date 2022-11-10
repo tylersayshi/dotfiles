@@ -10,6 +10,23 @@ function sudo
     end
 end
 
+function ts-playground
+    function clone-and-clean
+        git clone git@github.com:tylerjlawson/ts-playground.git --depth 1 $argv[1]\
+         && cd $argv[1]\
+         && rm -rf .git\
+         && code .\
+         && cd ..
+    end
+
+    if test (count $argv) -ge 1
+        clone-and-clean $argv[1]
+    else
+        clone-and-clean ts-playground
+    end
+end
+
+
 function pdfman -d "manpage as pdf"
     man -t $argv | pstopdf -i -o /tmp/$argv.pdf && open /tmp/$argv.pdf
 end
