@@ -49,3 +49,5 @@
 	rebase = false
 [init]
 	defaultBranch = main
+[advice]
+    skippedCherryPicks = false
