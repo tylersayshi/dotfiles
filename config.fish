@@ -70,12 +70,15 @@ function isnumber
 end
 
 
-# SPECIFIC TO MAC
-function brewup
+function update
+    # homebrew
     brew update
     brew upgrade
     brew cleanup
     brew doctor
+
+    # oh-my-fish for fish shell theming
+    omf update 
 end
 
 function port
