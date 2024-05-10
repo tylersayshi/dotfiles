@@ -126,7 +126,12 @@ set NVM_DIR $HOME/.nvm
 function nvm
     bass source ~/.nvm/nvm.sh --no-use ';' nvm $argv
 end
-nvm use default --silent
+
+if test -e ./.nvmrc
+    nvm use --silent
+else
+    nvm use default --silent
+end
 
 set -gx PNPM_HOME "$HOME/Library/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
