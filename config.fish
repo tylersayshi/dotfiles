@@ -1,6 +1,11 @@
-if test -e ~/.config/fish/local.fish
-    source ~/.config/fish/local.fish
+function source_if_exists
+    if test -e "$argv[1]"
+        source "$argv[1]"
+    end
 end
+
+source_if_exists ~/.config/fish/local.fish
+source_if_exists ~/.asdf/asdf.fish
 
 function sudo
     if test "$argv" = !!
