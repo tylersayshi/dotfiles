@@ -143,3 +143,6 @@ set --export PATH $BUN_INSTALL/bin $PATH
 
 # golang
 set --export PATH $HOME/go/bin $PATH
+
+# rust
+source "$HOME/.cargo/env.fish"
