@@ -106,8 +106,6 @@ function killport
 end
 # END MAC SPECIFIC
 
-thefuck --alias | source
-
 alias python="python3"
 alias hg="history | grep"
 alias dot="cd ~/gitspace/dotfiles"
