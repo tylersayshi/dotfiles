@@ -5,7 +5,6 @@ function source_if_exists
 end
 
 source_if_exists ~/.config/fish/local.fish
-source_if_exists ~/.asdf/asdf.fish
 
 function sudo
     if test "$argv" = !!
