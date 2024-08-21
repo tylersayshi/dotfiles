@@ -32,7 +32,15 @@ end
 
 
 function pdfman -d "manpage as pdf"
-    man -t $argv | pstopdf -i -o /tmp/$argv.pdf && open /tmp/$argv.pdf
+    man -t $argv | gs \
+        -o /tmp/$argv.pdf \
+        -sDEVICE=pdfwrite \
+        -dPDFSETTINGS=/prepress \
+        -dHaveTrueTypes=true \
+        -dEmbedAllFonts=true \
+        -dSubsetFonts=false \
+        -f - \
+        && open /tmp/$argv.pdf       
 end
 
 function ...
