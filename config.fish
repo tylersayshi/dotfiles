@@ -132,10 +132,8 @@ set -g theme_nerd_fonts yes
 
 fish_add_path $HOME/bin
 
-set NVM_DIR $HOME/.nvm
-function nvm
-    bass source ~/.nvm/nvm.sh --no-use ';' nvm $argv
-end
+# setup fnm
+fnm env --use-on-cd | source
 
 set -gx PNPM_HOME "$HOME/Library/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
