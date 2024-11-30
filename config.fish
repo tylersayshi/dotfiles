@@ -1,3 +1,6 @@
+# setup brew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 function source_if_exists
     if test -e "$argv[1]"
         source "$argv[1]"
@@ -131,9 +134,6 @@ set -g theme_date_format "+%a %H:%M"
 set -g theme_nerd_fonts yes
 
 fish_add_path $HOME/bin
-
-# setup fnm
-fnm env --use-on-cd | source
 
 set -gx PNPM_HOME "$HOME/Library/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
