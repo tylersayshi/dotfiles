@@ -17,23 +17,6 @@ function sudo
     end
 end
 
-function ts-playground
-    function clone-and-clean
-        git clone git@github.com:tylerjlawson/ts-playground.git --depth 1 $argv[1]\
-         && cd $argv[1]\
-         && rm -rf .git\
-         && code .\
-         && cd ..
-    end
-
-    if test (count $argv) -ge 1
-        clone-and-clean $argv[1]
-    else
-        clone-and-clean ts-playground
-    end
-end
-
-
 function pdfman -d "manpage as pdf"
     man -t $argv | gs \
         -o /tmp/$argv.pdf \
@@ -70,15 +53,6 @@ function mkcd -d "Create a directory and set CWD"
         end
     end
 end
-
-# SPECIFIC TO UBUNTU
-function aptup
-    sudo apt update
-    sudo apt -y upgrade
-    sudo apt clean
-    sudo apt -y autoremove
-end
-# END UBUNTU SPECIFIC
 
 function isnumber
     string match -qr '^[0-9]+$' $argv
