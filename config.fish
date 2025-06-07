@@ -26,15 +26,15 @@ function pdfman -d "manpage as pdf"
         -dEmbedAllFonts=true \
         -dSubsetFonts=false \
         -f - \
-        && open /tmp/$argv.pdf       
+        && open /tmp/$argv.pdf
 end
 
 function ...
-     cd ../..
+    cd ../..
 end
 
 function ....
-     cd ../../..
+    cd ../../..
 end
 
 function rnm
@@ -67,7 +67,7 @@ function update
     brew doctor
 
     # oh-my-fish for fish shell theming
-    omf update 
+    omf update
 end
 
 function port
@@ -111,7 +111,7 @@ fish_add_path $HOME/bin
 
 set -gx PNPM_HOME "$HOME/Library/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
 end
 
 # bun
@@ -123,3 +123,6 @@ set --export PATH $HOME/go/bin $PATH
 
 # rust
 source "$HOME/.cargo/env.fish"
+
+# helix
+set -gx HELIX_RUNTIME /opt/homebrew/Cellar/helix/25.01.1/libexec/runtime
