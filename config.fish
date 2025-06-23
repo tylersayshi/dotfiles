@@ -122,7 +122,7 @@ set --export PATH $BUN_INSTALL/bin $PATH
 set --export PATH $HOME/go/bin $PATH
 
 # rust
-source "$HOME/.cargo/env.fish"
+source_if_exists "$HOME/.cargo/env.fish"
 
 # helix
 set -gx HELIX_RUNTIME /opt/homebrew/Cellar/helix/25.01.1/libexec/runtime
