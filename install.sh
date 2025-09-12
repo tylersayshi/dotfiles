@@ -1,4 +1,5 @@
 #!/bin/bash
+brew install fzf
 cp .gitconfig ~
 cp .vimrc ~
 mkdir -p ~/.config/fish/conf.d
