@@ -1,0 +1,147 @@
+#!/bin/bash
+
+set -euo pipefail
+
+OWNER="tylersayshi"
+LIMIT=200
+
+show_help() {
+    cat << EOF
+Usage: repos <command> [pattern] [options]
+
+Commands:
+  list      List all repositories
+  delete    Interactively delete repositories
+
+Arguments:
+  pattern   Glob pattern to filter repositories (e.g., "repro", "thing*bar")
+
+Options:
+  -f, --forks    Show/operate on forks only
+  -h, --help     Show this help
+
+Examples:
+  repos list                    # List all repos
+  repos list "repro"            # List repos containing "repro"
+  repos list "thing*bar"        # List repos starting with "thing" and ending with "bar"
+  repos list -f                 # List only forks
+  repos delete "thing*bar"      # Delete repos matching pattern (interactive)
+  repos delete -f               # Delete forks only (interactive)
+EOF
+}
+
+get_repos() {
+    local fields="$1"
+    gh repo list "$OWNER" -L "$LIMIT" --json "$fields"
+}
+
+filter_repos() {
+    local repos="$1"
+    local pattern="$2"
+
+    if [[ -z "$pattern" ]]; then
+        echo "$repos"
+        return 0
+    fi
+
+    # Convert glob pattern to grep-compatible regex
+    local regex="${pattern//\*/.*}"
+
+    echo "$repos" | jq --arg pattern "$regex" '[.[] | select(.name | test($pattern))]'
+}
+
+list_repos() {
+    local forks_only="$1"
+    local pattern="$2"
+    local repos filtered_repos
+
+    repos=$(get_repos "name,url,isFork")
+    filtered_repos=$(filter_repos "$repos" "$pattern")
+
+    if [[ "$forks_only" == "true" ]]; then
+        echo "$filtered_repos" | jq -r '.[] | select(.isFork) | [.name, .url] | @tsv'
+    else
+        echo "$filtered_repos" | jq -r '.[] | [.name, .url] | @tsv'
+    fi | column -t
+}
+
+delete_repos() {
+    local forks_only="$1"
+    local pattern="$2"
+    local repos filtered_repos names selected
+
+    repos=$(get_repos "name,isFork")
+    filtered_repos=$(filter_repos "$repos" "$pattern")
+
+    if [[ "$forks_only" == "true" ]]; then
+        names=$(echo "$filtered_repos" | jq -r '.[] | select(.isFork) | .name')
+    else
+        names=$(echo "$filtered_repos" | jq -r '.[] | .name')
+    fi
+
+    if [[ -z "$names" ]]; then
+        echo "No repositories found matching the criteria"
+        return 0
+    fi
+
+    selected=$(echo "$names" | fzf -m --header="Select repositories to delete (matching pattern: ${pattern:-*})" || true)
+
+    if [[ -n "$selected" ]]; then
+        echo "Deleting selected repositories..."
+        echo "$selected" | while IFS= read -r repo; do
+            echo "Deleting: $repo"
+            gh repo delete "$OWNER/$repo" --yes
+        done
+    fi
+}
+
+# Parse arguments
+command=""
+pattern=""
+forks_only="false"
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -h|--help|help)
+            show_help
+            exit 0
+            ;;
+        -f|--forks)
+            forks_only="true"
+            shift
+            ;;
+        list|delete)
+            command="$1"
+            shift
+            # Check if next argument is a pattern (not a flag)
+            if [[ $# -gt 0 && ! "$1" =~ ^- ]]; then
+                pattern="$1"
+                shift
+            fi
+            ;;
+        *)
+            echo "Unknown option: $1" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+if [[ -z "$command" ]]; then
+    show_help
+    exit 1
+fi
+
+case "$command" in
+    list)
+        list_repos "$forks_only" "$pattern"
+        ;;
+    delete)
+        delete_repos "$forks_only" "$pattern"
+        ;;
+    *)
+        echo "Unknown command: $command" >&2
+        show_help
+        exit 1
+        ;;
+esac
