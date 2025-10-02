@@ -15,3 +15,5 @@ cask "ghostty"
 cask "obs"
 cask "podman-desktop"
 cask "spotify"
+cask "zed"
+
