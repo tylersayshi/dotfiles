@@ -1,5 +1,4 @@
 #!/bin/bash
-brew install fzf
 cp .gitconfig ~
 cp .vimrc ~
 mkdir -p ~/.config/fish/conf.d
@@ -9,4 +8,5 @@ cp bin/* ~/bin/
 cp config.ghostty ~/.config/ghostty/config
 cp config.fish ~/.config/fish/config.fish
 cp fnm.fish ~/.config/fish/conf.d/fnm.fish
+brew bundle install
 echo "Installed dotfiles"
