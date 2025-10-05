@@ -29,4 +29,6 @@ cask "obsidian"
 cask "zed"
 cask "orion"
 cask "raycast"
+cask "logi-options+"
+cask "vlc"
 
