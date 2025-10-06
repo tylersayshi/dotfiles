@@ -21,9 +21,9 @@ CURRENT_SORTED="$TEMP_DIR/Brewfile.current.sorted"
 # Dump current state
 brew bundle dump --file="$CURRENT_BREWFILE" --force
 
-# Sort both files (brew entries only, ignore comments/empty lines)
-grep -v '^#\|^$' "$SAVED_BREWFILE" | sort > "$SAVED_SORTED"
-grep -v '^#\|^$' "$CURRENT_BREWFILE" | sort > "$CURRENT_SORTED"
+# Sort both files (brew entries only, ignore comments/empty lines/vscode)
+grep -v '^#\|^$' "$SAVED_BREWFILE" | grep -v '^vscode ' | sort > "$SAVED_SORTED"
+grep -v '^#\|^$' "$CURRENT_BREWFILE" | grep -v '^vscode ' | sort > "$CURRENT_SORTED"
 
 # Find differences
 MISSING=$(comm -23 "$SAVED_SORTED" "$CURRENT_SORTED")

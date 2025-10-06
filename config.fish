@@ -93,6 +93,7 @@ end
 alias python="python3"
 alias hg="history | grep"
 alias dot="cd ~/gitspace/dotfiles"
+alias obsidian="cd ~/Library/Mobile Documents/iCloud~md~obsidian/Documents"
 
 alias gst="git status"
 alias gsp="cd ~/gitspace"
