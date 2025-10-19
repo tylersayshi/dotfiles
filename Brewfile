@@ -31,4 +31,7 @@ cask "orion"
 cask "raycast"
 cask "logi-options+"
 cask "vlc"
+cask "visual-studio-code"
+cask "signal"
 
+brew "opencode"
