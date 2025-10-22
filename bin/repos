@@ -10,8 +10,10 @@ show_help() {
 Usage: repos <command> [pattern] [options]
 
 Commands:
-  list      List all repositories
-  delete    Interactively delete repositories
+  list        List all repositories
+  delete      Interactively delete repositories
+  archive     Interactively archive repositories (excludes already archived)
+  unarchive   Interactively unarchive repositories (shows only archived)
 
 Arguments:
   pattern   Glob pattern to filter repositories (e.g., "repro", "thing*bar")
@@ -20,6 +22,12 @@ Options:
   -f, --forks    Show/operate on forks only
   -h, --help     Show this help
 
+Interactive Selection:
+  Tab           Select/deselect item
+  Shift+Tab     Select/deselect item (alternative)
+  Arrow keys    Navigate up/down
+  Enter         Confirm selections
+
 Examples:
   repos list                    # List all repos
   repos list "repro"            # List repos containing "repro"
@@ -27,6 +35,10 @@ Examples:
   repos list -f                 # List only forks
   repos delete "thing*bar"      # Delete repos matching pattern (interactive)
   repos delete -f               # Delete forks only (interactive)
+  repos archive "thing*bar"     # Archive repos matching pattern (interactive)
+  repos archive -f              # Archive forks only (interactive)
+  repos unarchive "thing*bar"   # Unarchive repos matching pattern (interactive)
+  repos unarchive -f            # Unarchive forks only (interactive)
 EOF
 }
 
@@ -95,6 +107,66 @@ delete_repos() {
     fi
 }
 
+archive_repos() {
+    local forks_only="$1"
+    local pattern="$2"
+    local repos filtered_repos names selected
+
+    repos=$(get_repos "name,isFork,isArchived")
+    filtered_repos=$(filter_repos "$repos" "$pattern")
+
+    if [[ "$forks_only" == "true" ]]; then
+        names=$(echo "$filtered_repos" | jq -r '.[] | select(.isFork) | select(.isArchived | not) | .name')
+    else
+        names=$(echo "$filtered_repos" | jq -r '.[] | select(.isArchived | not) | .name')
+    fi
+
+    if [[ -z "$names" ]]; then
+        echo "No repositories found matching the criteria"
+        return 0
+    fi
+
+    selected=$(echo "$names" | fzf -m --header="Select repositories to archive (matching pattern: ${pattern:-*})" || true)
+
+    if [[ -n "$selected" ]]; then
+        echo "Archiving selected repositories..."
+        echo "$selected" | while IFS= read -r repo; do
+            echo "Archiving: $repo"
+            gh repo archive "$OWNER/$repo" --yes
+        done
+    fi
+}
+
+unarchive_repos() {
+    local forks_only="$1"
+    local pattern="$2"
+    local repos filtered_repos names selected
+
+    repos=$(get_repos "name,isFork,isArchived")
+    filtered_repos=$(filter_repos "$repos" "$pattern")
+
+    if [[ "$forks_only" == "true" ]]; then
+        names=$(echo "$filtered_repos" | jq -r '.[] | select(.isFork) | select(.isArchived) | .name')
+    else
+        names=$(echo "$filtered_repos" | jq -r '.[] | select(.isArchived) | .name')
+    fi
+
+    if [[ -z "$names" ]]; then
+        echo "No repositories found matching the criteria"
+        return 0
+    fi
+
+    selected=$(echo "$names" | fzf -m --header="Select repositories to unarchive (matching pattern: ${pattern:-*})" || true)
+
+    if [[ -n "$selected" ]]; then
+        echo "Unarchiving selected repositories..."
+        echo "$selected" | while IFS= read -r repo; do
+            echo "Unarchiving: $repo"
+            gh repo unarchive "$OWNER/$repo" --yes
+        done
+    fi
+}
+
 # Parse arguments
 command=""
 pattern=""
@@ -110,7 +182,7 @@ while [[ $# -gt 0 ]]; do
             forks_only="true"
             shift
             ;;
-        list|delete)
+        list|delete|archive|unarchive)
             command="$1"
             shift
             # Check if next argument is a pattern (not a flag)
@@ -138,6 +210,12 @@ case "$command" in
         ;;
     delete)
         delete_repos "$forks_only" "$pattern"
+        ;;
+    archive)
+        archive_repos "$forks_only" "$pattern"
+        ;;
+    unarchive)
+        unarchive_repos "$forks_only" "$pattern"
         ;;
     *)
         echo "Unknown command: $command" >&2
