@@ -1,6 +1,5 @@
 #!/bin/bash
 cp .gitconfig ~
-cp .vimrc ~
 mkdir -p ~/.config/fish/conf.d
 mkdir -p ~/.config/ghostty
 mkdir -p ~/bin
