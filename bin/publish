@@ -1,0 +1,159 @@
+#!/bin/bash
+
+set -euo pipefail
+
+DRAFTS_DIR="$HOME/obsidian/commons/post-drafts"
+BLOG_DIR="$HOME/gitspace/blog"
+POSTS_DIR="$BLOG_DIR/posts"
+
+show_help() {
+    cat << EOF
+Usage: publish <filename>
+
+Publishes a post from ~/obsidian/post-drafts to ~/gitspace/blog/posts.
+
+Frontmatter Requirements:
+  title       Required - The post title
+  slug        Required - The URL slug for the post
+  description Optional - Post description
+  date        Optional - Will be set to current date automatically
+
+Options:
+  -n, --dry-run   Copy file and build, but skip git operations
+  -h, --help      Show this help
+
+Examples:
+  publish           # Opens interactive file picker
+  publish --dry-run # Copy and build only, no git commit/push
+EOF
+}
+
+error_exit() {
+    echo "Error: $1" >&2
+    exit 1
+}
+
+validate_frontmatter() {
+    local file="$1"
+    local content
+    content=$(cat "$file")
+
+    # Check if file has frontmatter (starts with ---)
+    if ! echo "$content" | head -1 | grep -q "^---$"; then
+        error_exit "File does not contain frontmatter (must start with ---)"
+    fi
+
+    # Extract frontmatter (between first and second ---)
+    local frontmatter
+    frontmatter=$(echo "$content" | sed -n '2,/^---$/p' | sed '$d')
+
+    # Check for required fields
+    if ! echo "$frontmatter" | grep -q "^title:"; then
+        error_exit "Frontmatter missing required field: title"
+    fi
+
+    if ! echo "$frontmatter" | grep -q "^slug:"; then
+        error_exit "Frontmatter missing required field: slug"
+    fi
+
+    # Extract slug for commit message
+    echo "$frontmatter" | grep "^slug:" | sed 's/^slug:[[:space:]]*//' | tr -d '"' | tr -d "'"
+}
+
+update_date() {
+    local file="$1"
+    local today
+    today=$(date +%Y-%m-%d)
+
+    # Check if date field exists
+    if grep -q "^date:" "$file"; then
+        # Replace existing date
+        sed -i '' "s/^date:.*$/date: $today/" "$file"
+    else
+        # Add date after the first ---
+        sed -i '' "1a\\
+date: $today
+" "$file"
+    fi
+}
+
+# Parse arguments
+dry_run="false"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help|help)
+            show_help
+            exit 0
+            ;;
+        -n|--dry-run)
+            dry_run="true"
+            shift
+            ;;
+        *)
+            echo "Unknown option: $1" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+# Check drafts directory exists
+if [[ ! -d "$DRAFTS_DIR" ]]; then
+    error_exit "Drafts directory does not exist: $DRAFTS_DIR"
+fi
+
+cd "$DRAFTS_DIR"
+
+# Get list of markdown files
+files=$(ls -1 *.md 2>/dev/null || true)
+
+if [[ -z "$files" ]]; then
+    error_exit "No markdown files found in $DRAFTS_DIR"
+fi
+
+# Use fzf to select a file
+filename=$(echo "$files" | fzf --header="Select a post to publish" || true)
+
+if [[ -z "$filename" ]]; then
+    echo "No file selected"
+    exit 0
+fi
+
+source_file="$DRAFTS_DIR/$filename"
+
+# Validate frontmatter and get slug (stays in drafts dir on error)
+cd "$DRAFTS_DIR"
+slug=$(validate_frontmatter "$source_file")
+
+echo "Publishing: $filename (slug: $slug)"
+
+# Use slug as the destination filename
+dest_filename="$slug.mdx"
+
+# Copy file to blog posts with .mdx extension
+cp "$source_file" "$POSTS_DIR/$dest_filename"
+
+# Move to blog directory for remaining operations
+cd "$BLOG_DIR"
+
+# Update date in the copied file
+update_date "$POSTS_DIR/$dest_filename"
+
+# Build to verify everything works
+echo "Running build..."
+if ! pnpm build; then
+    error_exit "Build failed"
+fi
+
+# Git operations
+if [[ "$dry_run" == "true" ]]; then
+    echo "Dry run complete - skipping git operations"
+    echo "File copied to: $POSTS_DIR/$dest_filename"
+else
+    echo "Committing and pushing..."
+    git add "posts/$dest_filename"
+    git commit -m "publishing $slug"
+    git push
+    echo "Successfully published: $slug"
+fi
