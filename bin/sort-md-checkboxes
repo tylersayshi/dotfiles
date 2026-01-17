@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -euo pipefail
+
+show_help() {
+    cat << EOF
+Usage: sort-md-checkboxes <file>
+
+Sorts a markdown file by checkbox status (in place):
+  - Unchecked items (- [ ]) move to the top
+  - Checked items (- [x] or - [X]) move to the bottom
+
+The relative order within each group is preserved.
+
+Examples:
+  sort-md-checkboxes todo.md
+EOF
+}
+
+if [[ $# -eq 0 || "$1" == "-h" || "$1" == "--help" ]]; then
+    show_help
+    exit 0
+fi
+
+file="$1"
+
+if [[ ! -f "$file" ]]; then
+    echo "Error: File not found: $file" >&2
+    exit 1
+fi
+
+# Extract unchecked and checked items while preserving order
+unchecked=$(grep -E '^\s*- \[ \]' "$file" || true)
+checked=$(grep -Ei '^\s*- \[x\]' "$file" || true)
+non_checkbox=$(grep -Ev '^\s*- \[[xX ]\]' "$file" || true)
+
+# Build the sorted output
+{
+    [[ -n "$non_checkbox" ]] && echo "$non_checkbox"
+    [[ -n "$unchecked" ]] && echo "$unchecked"
+    [[ -n "$checked" ]] && echo "$checked"
+} > "$file"
