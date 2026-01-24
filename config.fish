@@ -110,6 +110,7 @@ set -g theme_nerd_fonts yes
 set -g theme_display_go no
 
 fish_add_path $HOME/bin
+fish_add_path $HOME/.local/bin
 
 set -gx PNPM_HOME "$HOME/Library/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
