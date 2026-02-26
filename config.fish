@@ -118,6 +118,7 @@ if not string match -q -- $PNPM_HOME $PATH
 end
 
 set -gx CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY true
+set -gx COLORTERM truecolor
 
 if type -q fzf
     fzf --fish | source
